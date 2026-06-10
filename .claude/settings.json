@@ -6,6 +6,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash .claude/skills/zero-memory-curator/scripts/print-agents-section.sh --agents-file AGENTS.md \"Temporary Log And Data Placement\""
+          },
+          {
+            "type": "command",
             "command": "bash .claude/skills/zero-memory-curator/scripts/print-agents-section.sh --agents-file AGENTS.md \"Zero Context Persistence\""
           },
           {
@@ -19,6 +23,10 @@
       {
         "matcher": "TaskUpdate",
         "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/zero-memory-curator/scripts/print-agents-section.sh --agents-file AGENTS.md \"Temporary Log And Data Placement\""
+          },
           {
             "type": "command",
             "command": "bash .claude/skills/zero-memory-curator/scripts/print-agents-section.sh --agents-file AGENTS.md \"Zero Context Persistence\""

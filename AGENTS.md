@@ -1,5 +1,15 @@
 <INSTRUCTIONS>
 
+## Temporary Log And Data Placement
+- Force rule: never write temporary task logs or other temporary task data into the workspace root.
+- Always place ephemeral command-output captures and other temporary task data under `.zero-memory/tmp/`.
+- When an active context path exists, derive `<context_name>` from the active context directory name and write task scratch output under `.zero-memory/tmp/<context_name>/...`.
+- Keep `.zero-memory/tmp/current-context.txt` as the shared control file under `.zero-memory/tmp/`; other task scratch output should live in a context-specific subdirectory.
+- Even when running commands inside a nested repository or submodule, write temporary logs and data to the current workspace's `.zero-memory/tmp/<context_name>/...`, not to the nested repo's `tmp/` directory or any other nested-worktree temporary-data directory.
+- If no active context path exists, still avoid dumping files directly into `.zero-memory/tmp/`; use a short task-specific slug directory under `.zero-memory/tmp/`.
+- Treat `.zero-memory/tmp/` as disposable scratch space for temporary logs and data: files there may be removed at any time.
+- Never cite concrete `.zero-memory/tmp/<context_name>/...` paths in durable docs, design logs, implementation logs, `.zero-memory/daily/`, `.zero-memory/memory/`, `AGENTS.md`, or command examples.
+
 ## Zero Context Persistence
 - Force rule: for task-local continuation state that lets a restarted agent resume work from the saved context, the agent must use the `zero-context-persistence` skill; treat `.zero-memory/tmp/current-context.txt` as the authoritative active context-path handoff, keep that exact path updated during the task, and do not switch to another context path arbitrarily.
 - **TIMING RULE — NEVER SKIP**: When the agent is using an active `context.md` and is about to present results or next steps to the user, it MUST update `context.md` FIRST, THEN respond in chat. The correct context-persistence order is always: (1) persist context -> (2) chat response. If the agent realizes it forgot to update `context.md` before responding, it must update it immediately in the same turn, not wait for the user to ask.
