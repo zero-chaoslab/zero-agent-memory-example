@@ -1,0 +1,3 @@
+[submodule "extra/zero-agent-memory"]
+	path = extra/zero-agent-memory
+	url = https://github.com/zero-chaoslab/zero-agent-memory.git
