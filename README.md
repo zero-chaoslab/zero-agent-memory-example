@@ -72,7 +72,7 @@ rules, debugging patterns, project facts, and cross-project operating habits.
 - `.zero-memory/daily/`: raw daily learning entries that can be promoted into memory.
 - `.zero-memory/memory/`: curated graph-backed memory packages and indexes. This stores reusable knowledge for recall across tasks, such as decisions, debugging patterns, workflow rules, project facts, and skill or workflow routing hints.
 - `.zero-memory/observability/`: recall and memory-use event logs plus reports.
-- `.zero-memory/skills/`: optional memory-managed skill home generated when memory/reflection shows a reusable workflow deserves a stable skill document. These skills are discovered through `.zero-memory/memory/` routing, opened only when relevant, and can be corrected or refreshed when memory observes better usage during normal user-agent work. They are different from agent-native skill directories such as `.codex/skills`, `.cursor/skills`, or `.claude/skills`, whose skill descriptions may be loaded directly by the agent runtime.
+- `.zero-memory/skills/`: optional memory-managed skill home generated when memory/reflection shows a reusable workflow deserves a stable skill document. These skills are discovered through `.zero-memory/memory/` routing, opened only when relevant, and can be corrected or refreshed when memory observes better usage during normal user-agent work. They are different from agent-native skill directories such as `.agents/skills` or `.claude/skills`, whose skill descriptions may be loaded directly by the agent runtime.
 - `.zero-memory/tmp/`: disposable scratch output.
 - External or nested project workspaces: optional code checkouts the agent can
   operate on while this repo remains the memory root.
@@ -85,13 +85,12 @@ From a fresh repository root, the workspace layout above can be created with:
 git submodule add https://github.com/zero-chaoslab/zero-agent-memory.git extra/zero-agent-memory
 cat extra/zero-agent-memory/AGENTS.md >> AGENTS.md
 
-mkdir -p skills .codex .cursor .claude
+mkdir -p skills .agents .claude
 for skill_path in extra/zero-agent-memory/skills/zero-*; do
   ln -s "../$skill_path" "skills/$(basename "$skill_path")"
 done
 
-ln -s ../skills .codex/skills
-ln -s ../skills .cursor/skills
+ln -s ../skills .agents/skills
 ln -s ../skills .claude/skills
 [ -f .claude/settings.json ] || cp extra/zero-agent-memory/.claude/settings.json .claude/settings.json
 ```
